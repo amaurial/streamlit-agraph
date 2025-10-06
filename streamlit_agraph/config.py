@@ -11,7 +11,7 @@ class Config:
       self.edges = {"arrows":"none"}
 
     # https://visjs.github.io/vis-network/docs/network/physics.html#
-    self.physics = {"enabled": physics,
+    self.physics = {"enabled": False if hierarchical else physics,
                     "solver":kwargs.get("solver", "barnesHut"),
                     "minVelocity":kwargs.get("minVelocity", 1),
                     "maxVelocity":kwargs.get("maxVelocity", 100),
@@ -20,6 +20,12 @@ class Config:
                       "fit":kwargs.get("fit", True),
                       },
                     "timestep":kwargs.get("timestep", 0.5),
+                    "theta":kwargs.get("theta", 0.1),
+                    "gravitationalConstant": kwargs.get("gravitationalConstant", -5000),
+                    "nodeDistance": kwargs.get("nodeDistance", 400),
+                    "centralGravity": kwargs.get("nodeDistance", 0.1),
+                    "springLength": kwargs.get("springLength", 50),
+                    "springConstant": kwargs.get("springConstant", 50),
                     }
     # https://visjs.github.io/vis-network/docs/network/layout.html
     self.layout = {

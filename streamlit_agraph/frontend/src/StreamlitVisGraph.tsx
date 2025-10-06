@@ -14,18 +14,25 @@ function StreamlitVisGraph() {
 
   const graph: GraphData = {nodes: graphIn.nodes.slice(), edges: graphIn.edges.slice()}
 
+
   const events: GraphEvents = {
     selectNode: (event) => {
-      Streamlit.setComponentValue(event.nodes[0]);
+      Streamlit.setComponentValue([event.nodes[0],"SELECT_NODE"]);
+    },
+    selectEdge: (event) => {
+      Streamlit.setComponentValue([event.edges[0],"SELECT_EDGE"]);
     }
     ,
     doubleClick: (event) => {
       const lookupNode = lookupNodeId(event.nodes[0], graph.nodes);
-      if (lookupNode && lookupNode.link) {
+      if (lookupNode && lookupNode.link_enabled && lookupNode.link) {
         const link = lookupNode.link;
         if (link) {
           window.open(link);
         }
+      }
+      else{
+        Streamlit.setComponentValue([event.nodes[0],"DOUBLE_CLICK"])
       }
     }
   };

@@ -11,7 +11,8 @@ def load_graph_data():
             Node(id=marvel_file["name"],
                  label=marvel_file["name"],
                  shape="circularImage",
-                 image=marvel_file["img"])
+                 image=marvel_file["img"],
+                 link_enabled = False)
         )
         for sub_graph in marvel_file["children"]:
             nodes.append(Node(id=sub_graph["name"]))
@@ -23,6 +24,7 @@ def load_graph_data():
                                   shape="circularImage",
                                   image=node["img"],
                                   group=sub_graph["name"],
+                                  link_enabled = False
                                   )
                              )
                 edges.append(Edge(source=node["hero"], target=sub_graph["name"], label="blongs_to"))

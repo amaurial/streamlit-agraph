@@ -1,7 +1,8 @@
 
 Based on [react-graph-vis](https://github.com/crubier/react-graph-vis)
 
-
+## Build
+python setup.py sdist bdist_wheel
 ## Install
 
 `pip install streamlit-agraph`
