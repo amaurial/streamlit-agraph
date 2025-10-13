@@ -10,5 +10,5 @@ ReactDOM.render(
       <StreamlitVisGraph/>
     </StreamlitProvider>
   </React.StrictMode>,
-  document.getElementById("root")
+  document.getElementById("streamlit-agraph")
 )

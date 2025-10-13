@@ -14,7 +14,7 @@ from streamlit_agraph.node import Node
 from streamlit_agraph.edge import Edge
 from streamlit_agraph.triplestore import TripleStore
 
-_RELEASE = True
+_RELEASE = False
 
 if _RELEASE:
     parent_dir = os.path.dirname(os.path.abspath(__file__))
@@ -26,14 +26,14 @@ else:
         url="http://localhost:3001",
     )
       
-def agraph(nodes, edges, config):
+def agraph(nodes, edges, config, menus=None):
     node_ids = [node.id for node in nodes]
     if len(node_ids) > len(set(node_ids)):
         st.warning("Duplicated node IDs exist.")
     nodes_data = [ node.to_dict() for node in nodes]
     edges_data = [ edge.to_dict() for edge in edges]
     config_json = json.dumps(config.__dict__)
-    data = { "nodes": nodes_data, "edges": edges_data}
+    data = { "nodes": nodes_data, "edges": edges_data, "menuitems": menus if menus else {}}
     data_json = json.dumps(data)
     component_value = _agraph(data=data_json, config=config_json)
     return component_value
@@ -61,7 +61,8 @@ if not _RELEASE:
     #                 **kwargs,
     #                 )
 
-    return_value = agraph(nodes, edges, config=config)
+    menus = {"item1": "Text item1", "item2": "Text item2", "item3": "Text item3", "item4": "Text item4"}
+    return_value = agraph(nodes=nodes, edges=edges, config=config)
 
 
     st.write(return_value)

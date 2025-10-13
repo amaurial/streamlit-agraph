@@ -73,6 +73,28 @@ body {
   text-align: left;
   background-color: #fff;
 }
+.streamlit-agraph-context-menu {
+    display: none;
+    position: absolute;
+    background: white;
+    border: 1px solid #ccc;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    min-width: 150px;
+}
+.streamlit-agraph-context-menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.streamlit-agraph-context-menu li {
+    padding: 8px 12px;
+    cursor: pointer;
+}
+.streamlit-agraph-context-menu li:hover {
+    background: #f0f0f0;
+}
+
 [tabindex="-1"]:focus:not(:focus-visible) {
   outline: 0 !important;
 }

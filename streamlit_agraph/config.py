@@ -10,22 +10,51 @@ class Config:
     if not directed:
       self.edges = {"arrows":"none"}
 
+    solver = kwargs.get("solver", "barnesHut")
+    phys = {}
+    match solver:
+        case "barnesHut":
+            phys = {"theta": kwargs.get("theta", 0.5),
+                     "gravitationalConstant": kwargs.get("gravitationalConstant", -2000),
+                     "springConstant": kwargs.get("springConstant", 0.04),
+                     "springLength": kwargs.get("springLength", 95),
+                     "centralGravity": kwargs.get("nodeDistance", 0.3),
+                     "damping": kwargs.get("damping", 0.09),
+                     "avoidOverlap": kwargs.get("damping", 0)}
+        case "repulsion":
+            phys = {"springConstant": kwargs.get("springConstant", 0.05),
+                     "springLength": kwargs.get("springLength", 200),
+                     "centralGravity": kwargs.get("nodeDistance", 0.2),
+                     "nodeDistance": kwargs.get("nodeDistance", 100),
+                     "damping": kwargs.get("damping", 0.09)}
+        case "forceAtlas2Based":
+            phys = {"theta": kwargs.get("theta", 0.5),
+                  "gravitationalConstant": kwargs.get("gravitationalConstant", -50),
+                  "springConstant": kwargs.get("springConstant", 0.08),
+                  "springLength": kwargs.get("springLength", 100),
+                  "centralGravity": kwargs.get("nodeDistance", 0.01),
+                  "damping": kwargs.get("damping", 0.09),
+                  "avoidOverlap": kwargs.get("damping", 0)}
+        case "hierarchicalRepulsion":
+            phys= {"springConstant": kwargs.get("springConstant", 0.01),
+                      "springLength": kwargs.get("springLength", 100),
+                      "centralGravity": kwargs.get("nodeDistance", 0.1),
+                      "nodeDistance": kwargs.get("nodeDistance", 120),
+                      "damping": kwargs.get("damping", 0.09),
+                      "avoidOverlap": kwargs.get("damping", 0)}
+
     # https://visjs.github.io/vis-network/docs/network/physics.html#
     self.physics = {"enabled": False if hierarchical else physics,
                     "solver":kwargs.get("solver", "barnesHut"),
-                    "minVelocity":kwargs.get("minVelocity", 1),
-                    "maxVelocity":kwargs.get("maxVelocity", 100),
+                    "minVelocity":kwargs.get("minVelocity", 0.1),
+                    "maxVelocity":kwargs.get("maxVelocity", 50),
                     "stabilization":{
                       "enabled": kwargs.get("stabilization", True),
                       "fit":kwargs.get("fit", True),
+                      "iterations":kwargs.get("iterations", 1000),
                       },
                     "timestep":kwargs.get("timestep", 0.5),
-                    "theta":kwargs.get("theta", 0.1),
-                    "gravitationalConstant": kwargs.get("gravitationalConstant", -5000),
-                    "nodeDistance": kwargs.get("nodeDistance", 400),
-                    "centralGravity": kwargs.get("nodeDistance", 0.1),
-                    "springLength": kwargs.get("springLength", 50),
-                    "springConstant": kwargs.get("springConstant", 50),
+                    solver: phys
                     }
     # https://visjs.github.io/vis-network/docs/network/layout.html
     self.layout = {
